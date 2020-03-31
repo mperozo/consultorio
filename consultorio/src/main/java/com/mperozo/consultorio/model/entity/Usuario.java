@@ -17,11 +17,13 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
 import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "USUARIO", schema = "CONSULTORIO")
 @Data
+@Builder
 public class Usuario {
 
 	@Id
