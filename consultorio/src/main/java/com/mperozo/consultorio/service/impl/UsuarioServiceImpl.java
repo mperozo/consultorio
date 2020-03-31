@@ -3,7 +3,7 @@ package com.mperozo.consultorio.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mperozo.consultorio.excecption.BusinessException;
+import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.model.repository.UsuarioRepository;
 import com.mperozo.consultorio.service.UsuarioService;
