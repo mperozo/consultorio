@@ -29,15 +29,15 @@ public class Consulta {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "ID")
+	@JoinColumn(name = "ID_USUARIO_AGENDADOR")
 	private Usuario usuarioAgendador;
 
 	@ManyToOne
-	@JoinColumn(name = "ID")
+	@JoinColumn(name = "ID_MEDICO")
 	private Usuario medico;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "ID")
+	@JoinColumn(name = "ID_PACIENTE")
 	private Paciente paciente;
 
 	@Column(name = "DATA_CRIACAO")
