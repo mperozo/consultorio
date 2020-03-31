@@ -8,5 +8,10 @@ public interface UsuarioService {
 	
 	Usuario incluirUsuario(Usuario usuario);
 	
+	/**
+	 * Verifica se já existe o e-mail na base de dados
+	 * 
+	 * @param email
+	 */
 	void validarEmail(String email);
 }
