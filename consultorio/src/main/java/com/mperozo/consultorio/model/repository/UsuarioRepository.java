@@ -8,6 +8,7 @@ import com.mperozo.consultorio.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	Optional<Usuario> recuperarUsuarioPorEmail(String email);
-
+	Optional<Usuario> findByEmail(String email);
+	
+	boolean existsByEmail(String email);
 }
