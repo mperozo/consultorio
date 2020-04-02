@@ -26,12 +26,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario incluirUsuario(Usuario usuario) {
-		return null;
+		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
+		return usuarioRepository.save(usuario);
 	}
 
 	@Override
-	public void validarEmailExistente(String email) {
-		
+	public void verificarSeEmailJaEstaCadastrado(String email) {
 		if(usuarioRepository.existsByEmail(email)) {
 			throw new BusinessException("E-mail já cadastrado.");
 		}

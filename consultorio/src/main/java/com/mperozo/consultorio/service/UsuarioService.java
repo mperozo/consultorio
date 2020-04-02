@@ -13,5 +13,5 @@ public interface UsuarioService {
 	 * 
 	 * @param email
 	 */
-	void validarEmailExistente(String email);
+	void verificarSeEmailJaEstaCadastrado(String email);
 }
