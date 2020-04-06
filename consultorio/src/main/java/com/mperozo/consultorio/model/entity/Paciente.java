@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
@@ -25,10 +27,12 @@ public class Paciente {
 	private Long id;
 
 	@Column(name = "NOME")
+	@NotBlank(message = "Nome é obrigatório.")
 	private String nome;
 
 	@Column(name = "DATA_HORA_INCLUSAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	@NotNull(message = "Data de inclusão é obrigatória.")
 	private LocalDateTime dataHoraInclusao;
 
 }

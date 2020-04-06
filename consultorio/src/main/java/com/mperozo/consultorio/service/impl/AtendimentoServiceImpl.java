@@ -1,8 +1,13 @@
 package com.mperozo.consultorio.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
@@ -19,33 +24,50 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	}
 	
 	@Override
+	@Transactional
 	public Atendimento agendarAtendimento(Atendimento atendimento) {
-		// TODO Auto-generated method stub
-		return null;
+
+		validarAgendamento(atendimento);
+		atendimento.setStatus(StatusAtendimentoEnum.AGENDADO);
+		
+		return atendimentoRepository.save(atendimento);
+	}
+
+	private void validarAgendamento(Atendimento atendimento) {
+		
+		//TODO
 	}
 
 	@Override
+	@Transactional
 	public Atendimento atualizarAtendimento(Atendimento atendimento) {
-		// TODO Auto-generated method stub
-		return null;
+		Objects.requireNonNull(atendimento.getId());
+		//Optional<Atendimento> atendimentoPersistido = atendimentoRepository.findById(atendimento.getId());
+		return atendimentoRepository.save(atendimento);
 	}
 
 	@Override
 	public Atendimento atualizarStatusAtendimento(Atendimento atendimento, StatusAtendimentoEnum statusAtendimentoEnum) {
-		// TODO Auto-generated method stub
-		return null;
+		atendimento.setStatus(statusAtendimentoEnum);
+		return atualizarAtendimento(atendimento);
 	}
 
 	@Override
+	@Transactional
 	public void removerAtendimento(Atendimento atendimento) {
-		// TODO Auto-generated method stub
-		
+		Objects.requireNonNull(atendimento.getId());
+		atendimentoRepository.delete(atendimento);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Atendimento> consultar(Atendimento atendimentoFiltro) {
-		// TODO Auto-generated method stub
-		return null;
+		Example<Atendimento> example = Example.of(atendimentoFiltro, 
+				ExampleMatcher.matching()
+				.withIgnoreCase()
+				.withStringMatcher(StringMatcher.CONTAINING));
+		
+		return atendimentoRepository.findAll(example);
 	}
 
 }

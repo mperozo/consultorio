@@ -1,5 +1,6 @@
 package com.mperozo.consultorio.model.repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -14,6 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mperozo.consultorio.model.entity.Usuario;
+import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -30,7 +33,7 @@ public class UsuarioRepositoryIntegrationTest {
 	@Test
 	public void deveVerificarExistenciaDeUmEmail() {
 
-		Usuario usuario = Usuario.builder().nome("Marcos").email("marcos@email.com.br").build();
+		Usuario usuario = criarUsuario();
 		entityManager.persist(usuario);
 
 		boolean result = usuarioRepository.existsByEmail("marcos@email.com.br");
@@ -82,6 +85,9 @@ public class UsuarioRepositoryIntegrationTest {
 				.nome("Marcos")
 				.senha("senha")
 				.email("marcos@email.com.br")
+				.tipo(TipoUsuarioEnum.SECRETARIA)
+				.status(StatusUsuarioEnum.ATIVO)
+				.dataHoraInclusao(LocalDateTime.now())
 				.build();
 	}
 	
