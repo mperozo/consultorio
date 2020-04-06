@@ -65,4 +65,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
+	@Override
+	public Optional<Usuario> recuperarPorId(Long id) {
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		
+		if(!usuario.isPresent()) {
+			throw new BusinessException("Usuário não encontrado na base de dados: ID = " + id );
+		}
+		
+		return usuario;
+	}
+
 }

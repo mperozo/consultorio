@@ -20,13 +20,17 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "ATENDIMENTO", schema = "CONSULTORIO")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Atendimento {
 
 	@Id
