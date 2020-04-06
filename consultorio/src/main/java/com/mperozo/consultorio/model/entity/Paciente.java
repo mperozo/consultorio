@@ -1,6 +1,6 @@
 package com.mperozo.consultorio.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -27,8 +27,8 @@ public class Paciente {
 	@Column(name = "NOME")
 	private String nome;
 
-	@Column(name = "DATA_INCLUSAO")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-	private LocalDate dataInclusao;
+	@Column(name = "DATA_HORA_INCLUSAO")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dataHoraInclusao;
 
 }

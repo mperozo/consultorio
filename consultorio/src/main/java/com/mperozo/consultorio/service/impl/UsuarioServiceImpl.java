@@ -1,6 +1,6 @@
 package com.mperozo.consultorio.service.impl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		// TODO MVP de autenticação. Evoluir futuramente.
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
-		if (usuario.isEmpty()) {
+		if (!usuario.isPresent()) {
 			logger.info("Tentativa de autenticação: e-mail " + email + " inexistente.");
 			throw new AuthenticationException(USUARIO_OU_SENHA_INVALIDOS);
 		}
@@ -54,7 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	public Usuario incluirUsuario(Usuario usuario) {
 		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
-		usuario.setDataInclusao(LocalDate.now());
+		usuario.setDataHoraInclusao(LocalDateTime.now());
 		return usuarioRepository.save(usuario);
 	}
 
