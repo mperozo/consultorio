@@ -1,5 +1,6 @@
 package com.mperozo.consultorio.service.impl;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	public Usuario incluirUsuario(Usuario usuario) {
 		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
+		usuario.setDataInclusao(LocalDate.now());
 		return usuarioRepository.save(usuario);
 	}
 

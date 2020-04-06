@@ -18,10 +18,10 @@ import lombok.Builder;
 import lombok.Data;
 
 @Entity
-@Table(name = "CONSULTA", schema = "CONSULTORIO")
+@Table(name = "ATENDIMENTO", schema = "CONSULTORIO")
 @Data
 @Builder
-public class Consulta {
+public class Atendimento {
 
 	@Id
 	@Column(name = "ID")

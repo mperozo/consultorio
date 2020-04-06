@@ -21,7 +21,7 @@ CREATE TABLE consultorio.paciente
 	data_inclusao date DEFAULT now()
 );
 
-CREATE TABLE consultorio.consulta
+CREATE TABLE consultorio.atendimento
 (
 	id bigserial NOT NULL PRIMARY KEY,
 	id_usuario_agendador bigint references consultorio.usuario(id) NOT NULL,
