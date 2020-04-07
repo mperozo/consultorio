@@ -34,7 +34,7 @@ public class UsuarioController {
 								.senha(usuarioDTO.getSenha()).build();
 		
 		try {
-			Usuario usuarioSalvo = usuarioService.incluirUsuario(usuario);
+			Usuario usuarioSalvo = usuarioService.criarUsuario(usuario);
 			return new ResponseEntity(usuarioSalvo, HttpStatus.CREATED);
 		}catch(BusinessException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());

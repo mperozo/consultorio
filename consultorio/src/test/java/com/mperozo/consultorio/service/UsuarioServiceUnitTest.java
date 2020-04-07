@@ -104,7 +104,7 @@ public class UsuarioServiceUnitTest {
 		Mockito.lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
 		Mockito.lenient().when(usuarioRepositoryMock.save(usuario)).thenReturn(usuario);
 		
-		Usuario result = usuarioService.incluirUsuario(usuario);
+		Usuario result = usuarioService.criarUsuario(usuario);
 		
 		Assertions.assertThat(result).isEqualToComparingFieldByField(usuario);
 	}
@@ -116,7 +116,7 @@ public class UsuarioServiceUnitTest {
 		Mockito.lenient().doThrow(BusinessException.class).when(usuarioService).verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
 		
 		assertThrows(BusinessException.class, () -> {
-			usuarioService.incluirUsuario(usuario);
+			usuarioService.criarUsuario(usuario);
 		});
 		
 		Mockito.verify(usuarioRepositoryMock, Mockito.never()).save(usuario);

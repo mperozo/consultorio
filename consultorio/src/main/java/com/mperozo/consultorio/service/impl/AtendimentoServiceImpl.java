@@ -28,7 +28,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	
 	@Override
 	@Transactional
-	public Atendimento agendarAtendimento(Atendimento atendimento) {
+	public Atendimento criarAtendimento(Atendimento atendimento) {
 
 		validarAgendamento(atendimento);
 		atendimento.setStatus(StatusAtendimentoEnum.AGENDADO);
@@ -48,7 +48,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	@Transactional
 	public Atendimento atualizarAtendimento(Atendimento atendimentoNovo) {
 		
-		Atendimento atendimentoAntigo = recuperarPorId(atendimentoNovo.getId()).get();
+		Atendimento atendimentoAntigo = buscarPorId(atendimentoNovo.getId()).get();
 		Atendimento atendimentoAtualizado = atualizarAtendimento(atendimentoNovo, atendimentoAntigo);
 		
 		return atendimentoRepository.saveAndFlush(atendimentoAtualizado);
@@ -58,7 +58,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 
 		validarAlteracaoDeAtendimento(atendimentoNovo, atendimentoAntigo);
 		
-		atendimentoAntigo.setDataHoraAgendamento(atendimentoNovo.getDataHoraAgendamento());
+		atendimentoAntigo.setDataHoraAtendimento(atendimentoNovo.getDataHoraAtendimento());
 		atendimentoAntigo.setMedico(atendimentoNovo.getMedico());
 		atendimentoAntigo.setPaciente(atendimentoNovo.getPaciente());
 		atendimentoAntigo.setUsuarioAgendador(atendimentoNovo.getUsuarioAgendador());
@@ -86,14 +86,14 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 
 	@Override
 	@Transactional
-	public void removerAtendimento(Atendimento atendimento) {
+	public void deletarAtendimento(Atendimento atendimento) {
 		Objects.requireNonNull(atendimento.getId());
 		atendimentoRepository.delete(atendimento);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Atendimento> consultar(Atendimento atendimentoFiltro) {
+	public List<Atendimento> buscar(Atendimento atendimentoFiltro) {
 		Example<Atendimento> example = Example.of(atendimentoFiltro, 
 				ExampleMatcher.matching()
 				.withIgnoreCase()
@@ -103,7 +103,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	}
 
 	@Override
-	public Optional<Atendimento> recuperarPorId(Long id) {
+	public Optional<Atendimento> buscarPorId(Long id) {
 		Optional<Atendimento> atendimento = atendimentoRepository.findById(id);
 		
 		if(!atendimento.isPresent()) {
@@ -111,6 +111,11 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		}
 		
 		return atendimento;
+	}
+
+	@Override
+	public void excluir(Long id) {
+		atendimentoRepository.deleteById(id);
 	}
 
 }

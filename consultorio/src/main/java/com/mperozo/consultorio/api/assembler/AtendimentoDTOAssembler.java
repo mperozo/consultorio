@@ -21,9 +21,11 @@ public class AtendimentoDTOAssembler {
 		
 		return Atendimento.builder()
 				.id(dto.getId())
-				.dataHoraAgendamento(dto.getDataHoraAgendamento())
-				.paciente(pacienteService.recuperarPorId(dto.getIdPaciente()).get())
-				.medico(usuarioService.recuperarPorId(dto.getIdMedico()).get())
+				.dataHoraAtendimento(dto.getDataHoraAtendimento())
+				.paciente(pacienteService.buscarPorId(dto.getIdPaciente()).get())
+				.medico(usuarioService.buscarPorId(dto.getIdMedico()).get())
+				.usuarioAgendador(usuarioService.buscarPorId(dto.getId()).get())
+				.status(dto.getStatusAtendimento())
 				.build();
 	}
 

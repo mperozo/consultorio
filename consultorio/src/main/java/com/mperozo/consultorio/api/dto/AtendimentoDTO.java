@@ -2,6 +2,8 @@ package com.mperozo.consultorio.api.dto;
 
 import java.time.LocalDateTime;
 
+import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +16,7 @@ public class AtendimentoDTO {
 	private Long id;
 	private Long idMedico;
 	private Long idPaciente;
-	private LocalDateTime dataHoraAgendamento;
+	private Long idUsuarioAgendador;
+	private LocalDateTime dataHoraAtendimento;
+	private StatusAtendimentoEnum statusAtendimento;
 }

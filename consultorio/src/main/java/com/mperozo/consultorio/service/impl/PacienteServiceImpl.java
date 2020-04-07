@@ -16,7 +16,7 @@ public class PacienteServiceImpl implements PacienteService {
 	PacienteRepository pacienteRepository;
 
 	@Override
-	public Optional<Paciente> recuperarPorId(Long idPaciente) {
+	public Optional<Paciente> buscarPorId(Long idPaciente) {
 		
 		return pacienteRepository.findById(idPaciente);
 	}

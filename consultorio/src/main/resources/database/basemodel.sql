@@ -29,5 +29,5 @@ CREATE TABLE consultorio.atendimento
 	id_usuario_paciente bigint references consultorio.paciente(id) NOT NULL,
 	status character varying(10) NOT NULL,
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
-	data_hora_agendamento TIMESTAMP NOT NULL
+	data_hora_atendimento TIMESTAMP NOT NULL
 );

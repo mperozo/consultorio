@@ -57,10 +57,10 @@ public class Atendimento {
 	@NotNull(message = "Status do atendimento é obrigatório.")
 	private StatusAtendimentoEnum status;
 
-	@Column(name = "DATA_HORA_AGENDAMENTO")
+	@Column(name = "DATA_HORA_ATENDIMENTO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	@NotNull(message = "A data do atendimento é obrigatória.")
-	private LocalDateTime dataHoraAgendamento;
+	private LocalDateTime dataHoraAtendimento;
 	
 	@Column(name = "DATA_HORA_INCLUSAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)

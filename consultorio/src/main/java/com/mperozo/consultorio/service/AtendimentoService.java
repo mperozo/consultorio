@@ -8,15 +8,17 @@ import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 
 public interface AtendimentoService {
 
-	Atendimento agendarAtendimento(Atendimento atendimento);
+	Atendimento criarAtendimento(Atendimento atendimento);
 	
 	Atendimento atualizarAtendimento(Atendimento atendimento);
 	
 	Atendimento atualizarStatusAtendimento(Atendimento atendimento, StatusAtendimentoEnum statusAtendimentoEnum);
 	
-	void removerAtendimento(Atendimento atendimento);
+	void deletarAtendimento(Atendimento atendimento);
 	
-	List<Atendimento> consultar(Atendimento atendimentoFiltro);
+	List<Atendimento> buscar(Atendimento atendimentoFiltro);
 
-	Optional<Atendimento> recuperarPorId(Long id);
+	Optional<Atendimento> buscarPorId(Long id);
+
+	void excluir(Long id);
 }

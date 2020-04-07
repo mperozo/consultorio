@@ -8,9 +8,9 @@ public interface UsuarioService {
 
 	Usuario autenticar(String email, String senha);
 	
-	Usuario incluirUsuario(Usuario usuario);
+	Usuario criarUsuario(Usuario usuario);
 	
-	Optional<Usuario> recuperarPorId(Long id);
+	Optional<Usuario> buscarPorId(Long id);
 	
 	/**
 	 * Verifica se já existe o e-mail na base de dados

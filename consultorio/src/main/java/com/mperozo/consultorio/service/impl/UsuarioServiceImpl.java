@@ -52,7 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	@Transactional
-	public Usuario incluirUsuario(Usuario usuario) {
+	public Usuario criarUsuario(Usuario usuario) {
 		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
 		usuario.setDataHoraInclusao(LocalDateTime.now());
 		return usuarioRepository.save(usuario);
@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Optional<Usuario> recuperarPorId(Long id) {
+	public Optional<Usuario> buscarPorId(Long id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		
 		if(!usuario.isPresent()) {
