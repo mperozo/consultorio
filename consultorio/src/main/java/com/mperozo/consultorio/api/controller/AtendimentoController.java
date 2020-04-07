@@ -62,7 +62,7 @@ public class AtendimentoController {
 	}
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity excluirAtendimento( @PathVariable("id") Long id) {
+	public ResponseEntity deletarAtendimento( @PathVariable("id") Long id) {
 		
 		try {
 			atendimentoService.excluir(id);

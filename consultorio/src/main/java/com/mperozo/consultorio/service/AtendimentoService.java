@@ -12,7 +12,7 @@ public interface AtendimentoService {
 	
 	Atendimento atualizarAtendimento(Atendimento atendimento);
 	
-	Atendimento atualizarStatusAtendimento(Atendimento atendimento, StatusAtendimentoEnum statusAtendimentoEnum);
+	Atendimento atualizarStatusAtendimento(Long idAtendimento, StatusAtendimentoEnum statusAtendimentoEnum);
 	
 	void deletarAtendimento(Atendimento atendimento);
 	

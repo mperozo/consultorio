@@ -40,5 +40,9 @@ public class Paciente {
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	@NotNull(message = "Data de inclusão é obrigatória.")
 	private LocalDateTime dataHoraInclusao;
+	
+	@Column(name = "DATA_HORA_ALTERACAO")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime dataHoraAlteracao;
 
 }

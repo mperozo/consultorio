@@ -63,6 +63,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		atendimentoAntigo.setMedico(atendimentoNovo.getMedico());
 		atendimentoAntigo.setPaciente(atendimentoNovo.getPaciente());
 		atendimentoAntigo.setUsuarioAgendador(atendimentoNovo.getUsuarioAgendador());
+		atendimentoAntigo.setDataHoraAlteracao(LocalDateTime.now());
 		
 		return atendimentoAntigo;
 	}
@@ -73,16 +74,21 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		if(!atendimentoAntigo.getStatus().equals(atendimentoNovo.getStatus())) {
 			throw new BusinessException("Não é possível alterar o estado.");
 		}
-		
-		if(!atendimentoAntigo.getDataHoraInclusao().equals(atendimentoNovo.getDataHoraInclusao())) {
-			throw new BusinessException("Não é possível alterar a data e hora de inclusão.");
-		}
 	}
 
 	@Override
-	public Atendimento atualizarStatusAtendimento(Atendimento atendimento, StatusAtendimentoEnum statusAtendimentoEnum) {
-		atendimento.setStatus(statusAtendimentoEnum);
-		return atualizarAtendimento(atendimento);
+	public Atendimento atualizarStatusAtendimento(Long idAtendimento, StatusAtendimentoEnum novoStatusAtendimento) {
+		
+		Atendimento atendimento = buscarPorId(idAtendimento).get();
+
+		if(atendimento.getStatus().equals(novoStatusAtendimento)) {
+			throw new BusinessException("Novo estado do atendimento não pode ser igual ao estado anterior.");
+		}
+		
+		atendimento.setStatus(novoStatusAtendimento);
+		atendimento.setDataHoraAlteracao(LocalDateTime.now());
+		
+		return atendimentoRepository.saveAndFlush(atendimento);
 	}
 
 	@Override
