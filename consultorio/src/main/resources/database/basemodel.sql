@@ -1,4 +1,4 @@
-CREATE SCHEMA consultorio;
+--CREATE SCHEMA consultorio;
 
 CREATE TABLE consultorio.usuario
 (
@@ -26,7 +26,7 @@ CREATE TABLE consultorio.atendimento
 	id bigserial NOT NULL PRIMARY KEY,
 	id_usuario_agendador bigint references consultorio.usuario(id) NOT NULL,
 	id_usuario_medico bigint references consultorio.usuario(id),
-	id_usuario_paciente bigint references consultorio.paciente(id) NOT NULL,
+	id_paciente bigint references consultorio.paciente(id) NOT NULL,
 	status character varying(10) NOT NULL,
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
 	data_hora_atendimento TIMESTAMP NOT NULL

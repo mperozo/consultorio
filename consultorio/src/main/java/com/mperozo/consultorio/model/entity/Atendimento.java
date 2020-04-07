@@ -40,16 +40,14 @@ public class Atendimento {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_USUARIO_AGENDADOR")
-	@NotBlank(message = "Usuário agendador é obrigatório.")
 	private Usuario usuarioAgendador;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_MEDICO")
+	@JoinColumn(name = "ID_USUARIO_MEDICO")
 	private Usuario medico;
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_PACIENTE")
-	@NotBlank(message = "Paciente é obrigatório.")
 	private Paciente paciente;
 	
 	@Column(name = "STATUS")

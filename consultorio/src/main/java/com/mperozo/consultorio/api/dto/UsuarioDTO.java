@@ -1,5 +1,7 @@
 package com.mperozo.consultorio.api.dto;
 
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +11,8 @@ import lombok.Setter;
 @Builder
 public class UsuarioDTO {
 	
-	String nome;
-	String email;
-	String senha;
+	private String nome;
+	private String email;
+	private String senha;
+	private TipoUsuarioEnum tipoUsuario;
 }

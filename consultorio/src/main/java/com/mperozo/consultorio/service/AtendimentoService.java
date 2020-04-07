@@ -8,7 +8,7 @@ import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 
 public interface AtendimentoService {
 
-	Atendimento criarAtendimento(Atendimento atendimento);
+	Atendimento salvarAtendimento(Atendimento atendimento);
 	
 	Atendimento atualizarAtendimento(Atendimento atendimento);
 	

@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mperozo.consultorio.exception.AuthenticationException;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
+import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 import com.mperozo.consultorio.model.repository.UsuarioRepository;
 import com.mperozo.consultorio.service.UsuarioService;
 
@@ -52,9 +54,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	@Transactional
-	public Usuario criarUsuario(Usuario usuario) {
+	public Usuario salvarUsuario(Usuario usuario) {
 		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
 		usuario.setDataHoraInclusao(LocalDateTime.now());
+		usuario.setStatus(StatusUsuarioEnum.ATIVO);
 		return usuarioRepository.save(usuario);
 	}
 
@@ -66,14 +69,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Optional<Usuario> buscarPorId(Long id) {
+	public Usuario buscarPorId(Long id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		
 		if(!usuario.isPresent()) {
 			throw new BusinessException("Usuário não encontrado na base de dados: ID = " + id );
 		}
 		
-		return usuario;
+		return usuario.get();
 	}
 
 }

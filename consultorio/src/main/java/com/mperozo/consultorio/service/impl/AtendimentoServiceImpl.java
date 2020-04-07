@@ -28,20 +28,21 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	
 	@Override
 	@Transactional
-	public Atendimento criarAtendimento(Atendimento atendimento) {
+	public Atendimento salvarAtendimento(Atendimento atendimento) {
 
-		validarAgendamento(atendimento);
+		validarAtendimento(atendimento);
 		atendimento.setStatus(StatusAtendimentoEnum.AGENDADO);
 		atendimento.setDataHoraInclusao(LocalDateTime.now());
 		//TODO obter o usuário autenticado
 		//atendimento.setUsuarioAgendador(usuarioAgendador);
-		
 		return atendimentoRepository.save(atendimento);
 	}
 
-	private void validarAgendamento(Atendimento atendimento) {
+	private void validarAtendimento(Atendimento atendimento) {
 		
-		//TODO
+		if(atendimento.getPaciente() == null) {
+			throw new BusinessException("Paciente é obrigatório." );
+		}
 	}
 
 	@Override

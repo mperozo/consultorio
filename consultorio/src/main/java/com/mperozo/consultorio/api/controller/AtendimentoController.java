@@ -18,32 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mperozo.consultorio.api.assembler.AtendimentoDTOAssembler;
 import com.mperozo.consultorio.api.dto.AtendimentoDTO;
-import com.mperozo.consultorio.api.dto.AtendimentoDTO.AtendimentoDTOBuilder;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 import com.mperozo.consultorio.service.AtendimentoService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/atendimento")
+@RequiredArgsConstructor
 public class AtendimentoController {
 
 	@Autowired
-	private AtendimentoService atendimentoService;
+	private final AtendimentoService atendimentoService;
 
 	@Autowired
-	private AtendimentoDTOAssembler atendimentoDTOAssembler;
+	private final AtendimentoDTOAssembler atendimentoDTOAssembler;
 
-	public AtendimentoController(AtendimentoService atendimentoService) {
-		this.atendimentoService = atendimentoService;
-	}
-
-	@PostMapping("/agendar")
-	public ResponseEntity agendarAtendimento(@RequestBody AtendimentoDTO atendimentoDTO) {
+	@PostMapping("/salvar")
+	public ResponseEntity salvarAtendimento(@RequestBody AtendimentoDTO atendimentoDTO) {
 		
 		try {
 			Atendimento atendimento = atendimentoDTOAssembler.toEntity(atendimentoDTO);
-			Atendimento atendimentoAgendado = atendimentoService.criarAtendimento(atendimento);
+			Atendimento atendimentoAgendado = atendimentoService.salvarAtendimento(atendimento);
 			
 			return new ResponseEntity(atendimentoAgendado, HttpStatus.CREATED); 
 		} catch(BusinessException e) {

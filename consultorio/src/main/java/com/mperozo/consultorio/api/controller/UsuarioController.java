@@ -8,33 +8,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mperozo.consultorio.api.assembler.UsuarioDTOAssembler;
 import com.mperozo.consultorio.api.dto.UsuarioDTO;
 import com.mperozo.consultorio.exception.AuthenticationException;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/usuario")
+@RequiredArgsConstructor
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private final UsuarioService usuarioService;
 	
-	public UsuarioController(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+	@Autowired
+	private final UsuarioDTOAssembler usuarioDTOAssembler;
+	
+	@PostMapping("/salvar")
+	public ResponseEntity salvarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
 
-	@PostMapping("/incluir")
-	public ResponseEntity incluirUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-
-		Usuario usuario = Usuario.builder()
-								.nome(usuarioDTO.getNome())
-								.email(usuarioDTO.getEmail())
-								.senha(usuarioDTO.getSenha()).build();
+		Usuario usuario = usuarioDTOAssembler.toEntity(usuarioDTO);
 		
 		try {
-			Usuario usuarioSalvo = usuarioService.criarUsuario(usuario);
+			Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
 			return new ResponseEntity(usuarioSalvo, HttpStatus.CREATED);
 		}catch(BusinessException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
