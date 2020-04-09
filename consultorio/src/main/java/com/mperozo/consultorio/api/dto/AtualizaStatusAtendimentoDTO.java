@@ -1,5 +1,7 @@
 package com.mperozo.consultorio.api.dto;
 
+import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PacienteDTO {
+public class AtualizaStatusAtendimentoDTO {
 
-	private Long id;
-	private String nome;
+	private StatusAtendimentoEnum statusAtendimento;
 }

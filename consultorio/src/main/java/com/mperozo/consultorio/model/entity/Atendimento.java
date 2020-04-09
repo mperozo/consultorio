@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,10 @@ public class Atendimento {
 	@ManyToOne
 	@JoinColumn(name = "ID_PACIENTE")
 	private Paciente paciente;
+	
+	@OneToOne
+	@JoinColumn(name = "ID_PAGAMENTO")
+	private Pagamento pagamento;
 	
 	@Column(name = "STATUS")
 	@Enumerated(value = EnumType.STRING)

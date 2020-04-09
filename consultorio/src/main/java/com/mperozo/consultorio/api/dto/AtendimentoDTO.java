@@ -8,13 +8,15 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AtendimentoDTO {
 
 	private Long id;

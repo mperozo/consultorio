@@ -23,12 +23,21 @@ CREATE TABLE consultorio.paciente
 	data_hora_alteracao TIMESTAMP DEFAULT now()
 );
 
+CREATE TABLE consultorio.pagamento
+(
+	id bigserial NOT NULL PRIMARY KEY,
+	valor BOOLEAN NOT NULL,
+	pagamento_efetuado NUMERIC(10,2) NOT NULL,	
+	data_hora_alteracao TIMESTAMP DEFAULT now()
+);
+
 CREATE TABLE consultorio.atendimento
 (
 	id bigserial NOT NULL PRIMARY KEY,
 	id_usuario_agendador bigint references consultorio.usuario(id) NOT NULL,
 	id_usuario_medico bigint references consultorio.usuario(id),
 	id_paciente bigint references consultorio.paciente(id) NOT NULL,
+	id_pagamento bigint references consultorio.pagamento(id),
 	status character varying(10) NOT NULL,
 	data_hora_atendimento TIMESTAMP NOT NULL,
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),

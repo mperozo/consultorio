@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mperozo.consultorio.api.assembler.AtendimentoDTOAssembler;
 import com.mperozo.consultorio.api.dto.AtendimentoDTO;
+import com.mperozo.consultorio.api.dto.AtualizaStatusAtendimentoDTO;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
@@ -93,6 +94,18 @@ public class AtendimentoController {
 		List<Atendimento> atendimentos = atendimentoService.buscar(atendimentoFiltro);
 		
 		return ResponseEntity.ok(atendimentos);
+	}
+	
+	@PutMapping("{id}/atualizar-status")
+	public ResponseEntity atualizarStatusAtendimento(@PathVariable("id") Long id, @RequestBody AtualizaStatusAtendimentoDTO dto) {
+		
+		try {
+			Atendimento atendimentoAtualizado = atendimentoService.atualizarStatusAtendimento(id, dto.getStatusAtendimento());
+			return ResponseEntity.ok(atendimentoAtualizado);
+		} catch(Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage()); 
+		}
+		
 	}
 	
 }
