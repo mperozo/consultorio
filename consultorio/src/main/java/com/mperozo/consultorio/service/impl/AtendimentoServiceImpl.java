@@ -68,7 +68,6 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		return atendimentoAntigo;
 	}
 
-	// TODO criar testes unitários
 	private void validarAlteracaoDeAtendimento(Atendimento atendimentoNovo, Atendimento atendimentoAntigo) {
 
 		if(!atendimentoAntigo.getStatus().equals(atendimentoNovo.getStatus())) {

@@ -3,7 +3,7 @@ package com.mperozo.consultorio.model.repository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
 import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
+import com.mperozo.consultorio.utils.TestUtils;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -33,62 +34,49 @@ public class UsuarioRepositoryIntegrationTest {
 	@Test
 	public void deveVerificarExistenciaDeUmEmail() {
 
-		Usuario usuario = criarUsuario();
+		Usuario usuario = TestUtils.criarUsuario(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE, TipoUsuarioEnum.MEDICO);
 		entityManager.persist(usuario);
 
-		boolean result = usuarioRepository.existsByEmail("marcos@email.com.br");
+		boolean result = usuarioRepository.existsByEmail(TestUtils.EMAIL_PARA_TESTE);
 
-		Assertions.assertThat(result).isTrue();
+		assertThat(result).isTrue();
 	}
 
 	@Test
 	public void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComOEmail() {
 
-		boolean result = usuarioRepository.existsByEmail("marcos@email.com.br");
+		boolean result = usuarioRepository.existsByEmail(TestUtils.EMAIL_PARA_TESTE);
 
-		Assertions.assertThat(result).isFalse();
+		assertThat(result).isFalse();
 	}
 
 	@Test
 	public void devePersistirUmUsuarioNaBaseDeDados() {
 		
-		Usuario usuario = criarUsuario();
+		Usuario usuario = TestUtils.criarUsuario(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE, TipoUsuarioEnum.MEDICO);
 		
 		Usuario usuarioSalvo = entityManager.persist(usuario);
 		
-		Assertions.assertThat(usuarioSalvo.getId()).isNotNull();
+		assertThat(usuarioSalvo.getId()).isNotNull();
 	}
 	
 	@Test
 	public void deveBuscarUmUsuarioPorEmail() {
 		
-		Usuario usuario = criarUsuario();
+		Usuario usuario = TestUtils.criarUsuario(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE, TipoUsuarioEnum.MEDICO);
 
 		Usuario usuarioSalvo = entityManager.persist(usuario);
-		Optional<Usuario> result = usuarioRepository.findByEmail("marcos@email.com.br");
+		Optional<Usuario> result = usuarioRepository.findByEmail(TestUtils.EMAIL_PARA_TESTE);
 
-		Assertions.assertThat(result.isPresent()).isTrue();
-		Assertions.assertThat(usuarioSalvo).isEqualToComparingFieldByField(result.get());
+		assertThat(result.isPresent()).isTrue();
+		assertThat(usuarioSalvo).isEqualToComparingFieldByField(result.get());
 	}
 	
 	@Test
 	public void deveRetornarVazioAoBuscarUsuarioPorEmailQuandoNaoExisteNaBase() {
 		
-		Optional<Usuario> result = usuarioRepository.findByEmail("marcos@email.com.br");
-		Assertions.assertThat(result.isPresent()).isFalse();
-	}
-	
-	/* Métodos auxiliares */
-	
-	public static Usuario criarUsuario() {
-		return Usuario.builder()
-				.nome("Marcos")
-				.senha("senha")
-				.email("marcos@email.com.br")
-				.tipo(TipoUsuarioEnum.SECRETARIA)
-				.status(StatusUsuarioEnum.ATIVO)
-				.dataHoraInclusao(LocalDateTime.now())
-				.build();
+		Optional<Usuario> result = usuarioRepository.findByEmail(TestUtils.EMAIL_PARA_TESTE);
+		assertThat(result.isPresent()).isFalse();
 	}
 	
 }

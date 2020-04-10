@@ -4,13 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,13 +18,11 @@ import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.model.repository.UsuarioRepository;
 import com.mperozo.consultorio.service.impl.UsuarioServiceImpl;
+import com.mperozo.consultorio.utils.TestUtils;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class UsuarioServiceUnitTest {
-
-	private static final String SENHA_PARA_TESTE = "SENHA1";
-	private static final String EMAIL_PARA_TESTE = "emailparateste@email.com.br";
 
 	@MockBean
 	private UsuarioRepository usuarioRepositoryMock;
@@ -39,19 +34,19 @@ public class UsuarioServiceUnitTest {
 	public void deveValidarQueEmailAindaNaoFoiCadastrado() {
 
 		Mockito.lenient().when(usuarioRepositoryMock.existsByEmail(Mockito.anyString())).thenReturn(false);
-		usuarioService.verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
+		usuarioService.verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 	}
 
 	@Test
 	public void deveValidarQueEmailJaFoiCadastradoELancarException() {
 
-		Mockito.lenient().when(usuarioRepositoryMock.existsByEmail(EMAIL_PARA_TESTE)).thenReturn(true);
+		Mockito.lenient().when(usuarioRepositoryMock.existsByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(true);
 
 		Exception exception = assertThrows(BusinessException.class, () -> {
-			usuarioService.verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
+			usuarioService.verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 		});
 
-		Assertions.assertThat(exception)
+		assertThat(exception)
 					.isInstanceOf(BusinessException.class)
 					.hasMessage("E-mail já cadastrado.");
 		
@@ -60,12 +55,12 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveAutenticarUmUsuarioComSucesso() {
 
-		Usuario usuario = criarUsuario("Marcos", EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
-		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
+		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
+		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
 
-		Usuario usuarioAutenticado = usuarioService.autenticar(EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
+		Usuario usuarioAutenticado = usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
 
-		Assertions.assertThat(usuarioAutenticado).isEqualToComparingFieldByField(usuarioAutenticado);
+		assertThat(usuarioAutenticado).isEqualToComparingFieldByField(usuarioAutenticado);
 	}
 	
 	@Test
@@ -74,10 +69,10 @@ public class UsuarioServiceUnitTest {
 		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
 
 		Exception exception = assertThrows(AuthenticationException.class, () -> {
-			usuarioService.autenticar(EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
+			usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
 		});
 
-		Assertions.assertThat(exception)
+		assertThat(exception)
 					.isInstanceOf(AuthenticationException.class)
 					.hasMessage("Usuario ou senha inválidos.");
 	}
@@ -85,14 +80,14 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveLancarExceptionAoVerificarQueASenhaNaoEstaCorreta() {
 
-		Usuario usuario = criarUsuario("Marcos", EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
-		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
+		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
+		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
 
 		Exception exception = assertThrows(AuthenticationException.class, () -> {
-			usuarioService.autenticar(EMAIL_PARA_TESTE, "SENHA2");
+			usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, "SENHA2");
 		});
 
-		Assertions.assertThat(exception)
+		assertThat(exception)
 					.isInstanceOf(AuthenticationException.class)
 					.hasMessage("Usuario ou senha inválidos.");
 	}
@@ -100,20 +95,20 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveIncluirUsuarioComSucesso() {
 		
-		Usuario usuario = criarUsuario("Marcos", EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
-		Mockito.lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
+		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
+		Mockito.lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 		Mockito.lenient().when(usuarioRepositoryMock.save(usuario)).thenReturn(usuario);
 		
 		Usuario result = usuarioService.salvarUsuario(usuario);
 		
-		Assertions.assertThat(result).isEqualToComparingFieldByField(usuario);
+		assertThat(result).isEqualToComparingFieldByField(usuario);
 	}
 	
 	@Test
 	public void deveLancarExceptionAoTentarSalvarUsuarioComEmailJaCadastrado() {
 		
-		Usuario usuario = criarUsuario("Marcos", EMAIL_PARA_TESTE, SENHA_PARA_TESTE);
-		Mockito.lenient().doThrow(BusinessException.class).when(usuarioService).verificarSeEmailJaEstaCadastrado(EMAIL_PARA_TESTE);
+		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
+		Mockito.lenient().doThrow(BusinessException.class).when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 		
 		assertThrows(BusinessException.class, () -> {
 			usuarioService.salvarUsuario(usuario);
