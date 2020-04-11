@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mperozo.consultorio.model.entity.Usuario;
-import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
 import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 import com.mperozo.consultorio.utils.TestUtils;
 

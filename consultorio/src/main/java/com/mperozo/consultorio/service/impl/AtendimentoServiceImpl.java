@@ -38,7 +38,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		return atendimentoRepository.save(atendimento);
 	}
 
-	private void validarAtendimento(Atendimento atendimento) {
+	protected void validarAtendimento(Atendimento atendimento) {
 		
 		if(atendimento.getPaciente() == null) {
 			throw new BusinessException("Paciente é obrigatório." );
@@ -80,13 +80,12 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	public Atendimento atualizarStatusAtendimento(Long idAtendimento, StatusAtendimentoEnum novoStatusAtendimento) {
 		
 		Atendimento atendimento = buscarPorId(idAtendimento).get();
-
-		if(atendimento.getStatus().equals(novoStatusAtendimento)) {
-			throw new BusinessException("Novo estado do atendimento não pode ser igual ao estado anterior.");
-		}
 		
 		if(novoStatusAtendimento == null) {
 			throw new BusinessException("Novo status para atendimento inválido.");
+		}
+		if(atendimento.getStatus().equals(novoStatusAtendimento)) {
+			throw new BusinessException("Novo estado do atendimento não pode ser igual ao estado anterior.");
 		}
 		
 		atendimento.setStatus(novoStatusAtendimento);

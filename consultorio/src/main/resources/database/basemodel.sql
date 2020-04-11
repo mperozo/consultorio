@@ -46,7 +46,7 @@ CREATE TABLE consultorio.plano_saude
 	id bigserial NOT NULL PRIMARY KEY,
 	numero_plano_saude integer NOT NULL,
 	id_operadora_plano_saude bigint references consultorio.operadora_plano_saude(id) NOT NULL,
-	id_paciente bigint references consultorio.paciente(id),
+	id_paciente bigint references consultorio.paciente(id) NOT NULL,
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
 	data_hora_alteracao TIMESTAMP
 );

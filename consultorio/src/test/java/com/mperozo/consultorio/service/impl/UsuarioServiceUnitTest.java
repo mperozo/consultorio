@@ -1,13 +1,13 @@
-package com.mperozo.consultorio.service;
+package com.mperozo.consultorio.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,7 +17,6 @@ import com.mperozo.consultorio.exception.AuthenticationException;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.model.repository.UsuarioRepository;
-import com.mperozo.consultorio.service.impl.UsuarioServiceImpl;
 import com.mperozo.consultorio.utils.TestUtils;
 
 @ExtendWith(SpringExtension.class)
@@ -33,14 +32,14 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveValidarQueEmailAindaNaoFoiCadastrado() {
 
-		Mockito.lenient().when(usuarioRepositoryMock.existsByEmail(Mockito.anyString())).thenReturn(false);
+		lenient().when(usuarioRepositoryMock.existsByEmail(anyString())).thenReturn(false);
 		usuarioService.verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 	}
 
 	@Test
 	public void deveValidarQueEmailJaFoiCadastradoELancarException() {
 
-		Mockito.lenient().when(usuarioRepositoryMock.existsByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(true);
+		lenient().when(usuarioRepositoryMock.existsByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(true);
 
 		Exception exception = assertThrows(BusinessException.class, () -> {
 			usuarioService.verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
@@ -56,7 +55,7 @@ public class UsuarioServiceUnitTest {
 	public void deveAutenticarUmUsuarioComSucesso() {
 
 		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
-		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
+		lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
 
 		Usuario usuarioAutenticado = usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
 
@@ -66,7 +65,7 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveLancarExceptionAoNaoEncontrarUsuarioPeloEmail() {
 
-		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+		lenient().when(usuarioRepositoryMock.findByEmail(anyString())).thenReturn(Optional.empty());
 
 		Exception exception = assertThrows(AuthenticationException.class, () -> {
 			usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
@@ -81,7 +80,7 @@ public class UsuarioServiceUnitTest {
 	public void deveLancarExceptionAoVerificarQueASenhaNaoEstaCorreta() {
 
 		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
-		Mockito.lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
+		lenient().when(usuarioRepositoryMock.findByEmail(TestUtils.EMAIL_PARA_TESTE)).thenReturn(Optional.of(usuario));
 
 		Exception exception = assertThrows(AuthenticationException.class, () -> {
 			usuarioService.autenticar(TestUtils.EMAIL_PARA_TESTE, "SENHA2");
@@ -96,8 +95,8 @@ public class UsuarioServiceUnitTest {
 	public void deveIncluirUsuarioComSucesso() {
 		
 		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
-		Mockito.lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
-		Mockito.lenient().when(usuarioRepositoryMock.save(usuario)).thenReturn(usuario);
+		lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
+		lenient().when(usuarioRepositoryMock.save(usuario)).thenReturn(usuario);
 		
 		Usuario result = usuarioService.salvarUsuario(usuario);
 		
@@ -108,13 +107,13 @@ public class UsuarioServiceUnitTest {
 	public void deveLancarExceptionAoTentarSalvarUsuarioComEmailJaCadastrado() {
 		
 		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
-		Mockito.lenient().doThrow(BusinessException.class).when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
+		lenient().doThrow(BusinessException.class).when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 		
 		assertThrows(BusinessException.class, () -> {
 			usuarioService.salvarUsuario(usuario);
 		});
 		
-		Mockito.verify(usuarioRepositoryMock, Mockito.never()).save(usuario);
+		verify(usuarioRepositoryMock, never()).save(usuario);
 	}
 
 	/* Métodos auxiliares */
