@@ -5,3 +5,5 @@ DROP TABLE consultorio.pagamento CASCADE;
 DROP TABLE consultorio.prontuario CASCADE;
 DROP TABLE consultorio.registro_prontuario CASCADE;
 DROP TABLE consultorio.exame CASCADE;
+DROP TABLE consultorio.plano_saude CASCADE;
+DROP TABLE consultorio.operadora_plano_saude CASCADE;
