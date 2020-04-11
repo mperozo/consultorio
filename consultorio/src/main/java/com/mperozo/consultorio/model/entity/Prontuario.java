@@ -1,6 +1,5 @@
 package com.mperozo.consultorio.model.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
@@ -19,25 +19,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PAGAMENTO", schema = "CONSULTORIO")
+@Table(name = "PRONTUARIO", schema = "CONSULTORIO")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pagamento {
-	
+public class Prontuario {
+
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(name = "VALOR")
-	private BigDecimal valor;
 	
-	// Criar a entidade plano de saude e associar ao paciente
-
-	@Column(name = "PAGAMENTO_EFETUADO")
-	private boolean pagamentoEfetuado;
+	@Column(name = "NUMERO_PRONTUARIO")
+	private Integer numeroProntuario;
+	
+	@Column(name = "DATA_HORA_INCLUSAO")
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	@NotNull(message = "Data de inclusão é obrigatória.")
+	private LocalDateTime dataHoraInclusao;
 	
 	@Column(name = "DATA_HORA_ALTERACAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)

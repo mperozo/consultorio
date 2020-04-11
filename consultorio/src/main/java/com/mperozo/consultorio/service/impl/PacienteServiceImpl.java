@@ -9,14 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Paciente;
+import com.mperozo.consultorio.model.entity.Prontuario;
 import com.mperozo.consultorio.model.repository.PacienteRepository;
 import com.mperozo.consultorio.service.PacienteService;
+import com.mperozo.consultorio.service.ProntuarioService;
 
 @Service
 public class PacienteServiceImpl implements PacienteService {
 
 	@Autowired
 	PacienteRepository pacienteRepository;
+	
+	@Autowired
+	ProntuarioService prontuarioService;
 
 	@Override
 	public Paciente buscarPorId(Long idPaciente) {
@@ -33,7 +38,11 @@ public class PacienteServiceImpl implements PacienteService {
 	@Transactional
 	public Paciente salvar(Paciente paciente) {
 		
+		Prontuario prontuario = prontuarioService.criarProntuario();
+		
 		paciente.setDataHoraInclusao(LocalDateTime.now());
+		paciente.setProntuario(prontuario);
+		
 		return pacienteRepository.save(paciente);
 	}
 }

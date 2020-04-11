@@ -15,10 +15,19 @@ CREATE TABLE consultorio.usuario
 	CONSTRAINT usuario_tipo_check CHECK (tipo::text = ANY (ARRAY['SECRETARIA'::character varying, 'MEDICO'::character varying]::text[]))
 );
 
+CREATE TABLE consultorio.prontuario
+(
+	id bigserial NOT NULL PRIMARY KEY,
+	numero_prontuario integer NOT NULL,
+	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
+	data_hora_alteracao TIMESTAMP DEFAULT now()
+);
+
 CREATE TABLE consultorio.paciente
 (
 	id bigserial NOT NULL PRIMARY KEY,
 	nome character varying(150) NOT NULL,
+	id_prontuario bigint references consultorio.prontuario(id) NOT NULL,
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
 	data_hora_alteracao TIMESTAMP DEFAULT now()
 );
@@ -40,6 +49,26 @@ CREATE TABLE consultorio.atendimento
 	id_pagamento bigint references consultorio.pagamento(id),
 	status character varying(10) NOT NULL,
 	data_hora_atendimento TIMESTAMP NOT NULL,
+	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
+	data_hora_alteracao TIMESTAMP DEFAULT now()
+);
+
+CREATE TABLE consultorio.registro_prontuario
+(
+	id bigserial NOT NULL PRIMARY KEY,
+	descricao character varying(500) NOT NULL,
+	tipo character varying(30) NOT NULL,
+	id_prontuario bigint references consultorio.prontuario(id),
+	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
+	data_hora_alteracao TIMESTAMP DEFAULT now()
+);
+
+CREATE TABLE consultorio.exame
+(
+	id bigserial NOT NULL PRIMARY KEY,
+	descricao character varying(500) NOT NULL,
+	laudo character varying(500) NOT NULL,
+	id_prontuario bigint references consultorio.prontuario(id),
 	data_hora_inclusao TIMESTAMP NOT NULL DEFAULT now(),
 	data_hora_alteracao TIMESTAMP DEFAULT now()
 );
