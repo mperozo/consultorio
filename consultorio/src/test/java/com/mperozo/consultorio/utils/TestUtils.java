@@ -2,6 +2,7 @@ package com.mperozo.consultorio.utils;
 
 import java.time.LocalDateTime;
 
+import com.mperozo.consultorio.api.dto.UsuarioDTO;
 import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.entity.Paciente;
 import com.mperozo.consultorio.model.entity.Usuario;
@@ -13,6 +14,7 @@ public class TestUtils {
 
 	public static final String SENHA_PARA_TESTE = "SENHA1";
 	public static final String EMAIL_PARA_TESTE = "emailparateste@email.com.br";
+	public static final TipoUsuarioEnum TIPO_MEDICO = TipoUsuarioEnum.MEDICO;
 	
 	private TestUtils() {}
 	
@@ -47,5 +49,14 @@ public class TestUtils {
 	
 	public static Paciente criarPaciente() {
 		return Paciente.builder().nome("Nome").build();
+	}
+
+	public static UsuarioDTO criarUsuarioDTO(String email, String senha, TipoUsuarioEnum tipoUsuario) {
+
+		return UsuarioDTO.builder()
+				.email(email)
+				.senha(senha)
+				.tipoUsuario(tipoUsuario)
+				.build();
 	}
 }

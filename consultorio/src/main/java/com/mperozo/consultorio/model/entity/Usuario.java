@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mperozo.consultorio.model.enums.StatusUsuarioEnum;
 import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 
@@ -57,6 +58,7 @@ public class Usuario {
 
 	@Column(name = "SENHA")
 	@NotBlank(message = "Senha é obrigatória.")
+	@JsonIgnore
 	private String senha;
 
 	@Column(name = "DATA_HORA_INCLUSAO")

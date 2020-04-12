@@ -43,6 +43,18 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 		if(atendimento.getPaciente() == null) {
 			throw new BusinessException("Paciente é obrigatório." );
 		}
+		
+		if(atendimento.getMedico() == null) {
+			throw new BusinessException("Medico é obrigatório." );
+		}
+		
+		if(atendimento.getUsuarioAgendador() == null) {
+			throw new BusinessException("Usuário Cadastrador é obrigatório." );
+		}
+		
+		if(atendimento.getStatus() == null) {
+			throw new BusinessException("Status é obrigatório." );
+		}
 	}
 
 	@Override

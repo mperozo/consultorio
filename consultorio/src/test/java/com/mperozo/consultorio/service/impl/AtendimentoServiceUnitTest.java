@@ -1,13 +1,14 @@
 package com.mperozo.consultorio.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doReturn;
 
 import java.util.Arrays;
 import java.util.List;
@@ -181,5 +182,67 @@ public class AtendimentoServiceUnitTest {
 		verify(atendimentoRepositoryMock, Mockito.never()).saveAndFlush(Mockito.any(Atendimento.class));
 	}
 		
+	@Test
+	public void deveObterUmAtendimentoPorId() {
+		
+		Long id = 1L;
+		
+		Atendimento atendimento = TestUtils.criarAtendimento();
+		atendimento.setId(id);
+		
+		doReturn(Optional.of(atendimento)).when(atendimentoRepositoryMock).findById(id);
+		
+		Optional<Atendimento> result = atendimentoService.buscarPorId(id);
+		
+		assertThat(result.isPresent()).isTrue();
+		assertThat(result.get()).isEqualTo(atendimento);
+	}
+	
+	@Test
+	public void deveRetornarVazioQuandoOAtendimentoNaoExiste() {
+		
+		Long id = 1L;
+		
+		Exception exception = assertThrows(BusinessException.class, () -> {
+			atendimentoService.buscarPorId(id);
+		});
 
+		assertThat(exception)
+			.isInstanceOf(BusinessException.class)
+			.hasMessage("Atendimento não encontrado na base de dados: ID = 1");
+	}
+	
+	@Test
+	public void deveValidarAtendimentoSemLancarException() {
+		
+		Atendimento atendimento = TestUtils.criarAtendimento();
+		
+		atendimentoService.validarAtendimento(atendimento);
+	}
+
+	@Test
+	public void deveLancarExceptionsAoValidarAtendimento() {
+		
+		Atendimento atendimento = new Atendimento();
+		
+		Throwable erro = catchThrowable( () -> atendimentoService.validarAtendimento(atendimento));
+		assertThat(erro).isInstanceOf(BusinessException.class).hasMessage("Paciente é obrigatório.");
+		
+		atendimento.setPaciente(TestUtils.criarPaciente());
+		
+		erro = catchThrowable( () -> atendimentoService.validarAtendimento(atendimento));
+		assertThat(erro).isInstanceOf(BusinessException.class).hasMessage("Medico é obrigatório.");
+		
+		atendimento.setMedico(TestUtils.criarUsuario(null, null, TipoUsuarioEnum.MEDICO));
+		
+		erro = catchThrowable( () -> atendimentoService.validarAtendimento(atendimento));
+		assertThat(erro).isInstanceOf(BusinessException.class).hasMessage("Usuário Cadastrador é obrigatório.");
+		
+		atendimento.setUsuarioAgendador(TestUtils.criarUsuario(null, null, null));
+		
+		erro = catchThrowable( () -> atendimentoService.validarAtendimento(atendimento));
+		assertThat(erro).isInstanceOf(BusinessException.class).hasMessage("Status é obrigatório.");
+	}
+
+	
 }
