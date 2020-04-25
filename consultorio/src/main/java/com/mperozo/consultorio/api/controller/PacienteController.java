@@ -17,7 +17,7 @@ import com.mperozo.consultorio.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/paciente")
+@RequestMapping("/api/pacientes")
 @RequiredArgsConstructor
 public class PacienteController {
 

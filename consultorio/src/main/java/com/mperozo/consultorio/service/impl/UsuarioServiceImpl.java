@@ -56,9 +56,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
 		verificarSeEmailJaEstaCadastrado(usuario.getEmail());
+		validarUsuarioParaSalvar(usuario);
 		usuario.setDataHoraInclusao(LocalDateTime.now());
 		usuario.setStatus(StatusUsuarioEnum.ATIVO);
 		return usuarioRepository.save(usuario);
+	}
+
+	private void validarUsuarioParaSalvar(Usuario usuario) {
+
+		if(usuario.getTipo() == null) {
+			throw new BusinessException("Tipo do usuário é obrigatório.");
+		}
 	}
 
 	@Override
