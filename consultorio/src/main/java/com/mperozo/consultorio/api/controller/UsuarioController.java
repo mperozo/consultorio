@@ -1,5 +1,7 @@
 package com.mperozo.consultorio.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mperozo.consultorio.api.assembler.UsuarioDTOAssembler;
@@ -15,6 +18,7 @@ import com.mperozo.consultorio.api.dto.UsuarioDTO;
 import com.mperozo.consultorio.exception.AuthenticationException;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 import com.mperozo.consultorio.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -54,8 +58,8 @@ public class UsuarioController {
 		}
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity recuperarUsuario(@PathVariable("id") Long id) {
+	@GetMapping("/buscar/{id}")
+	public ResponseEntity buscarUsuario(@PathVariable("id") Long id) {
 		
 		Usuario usuario = usuarioService.buscarPorId(id);
 		
@@ -64,6 +68,14 @@ public class UsuarioController {
 		}
 		
 		return ResponseEntity.ok(usuario);
+	}
+	
+	@GetMapping("/buscar-por-tipo")
+	public ResponseEntity buscarUsuariosPorTipo(@RequestParam(value = "tipo", required = true) TipoUsuarioEnum tipo) {
+		
+		List<UsuarioDTO> usuariosDTOList = usuarioDTOAssembler.toDTOList(usuarioService.buscarUsuariosPorTipo(tipo));
+		
+		return ResponseEntity.ok(usuariosDTOList);
 	}
 	
 }

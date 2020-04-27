@@ -1,6 +1,9 @@
 package com.mperozo.consultorio.service;
 
+import java.util.List;
+
 import com.mperozo.consultorio.model.entity.Usuario;
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 
 public interface UsuarioService {
 
@@ -16,4 +19,6 @@ public interface UsuarioService {
 	 * @param email
 	 */
 	void verificarSeEmailJaEstaCadastrado(String email);
+
+	List<Usuario> buscarUsuariosPorTipo(TipoUsuarioEnum tipoUsuario);
 }

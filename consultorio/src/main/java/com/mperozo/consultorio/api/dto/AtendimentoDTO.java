@@ -20,12 +20,12 @@ import lombok.NoArgsConstructor;
 public class AtendimentoDTO {
 
 	private Long id;
-	
 	private Long idMedico;
-	
 	private Long idPaciente;
-	
 	private Long idUsuarioAgendador;
+	
+	private String nomeMedico;
+	private String nomePaciente;
 	
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	private LocalDateTime dataHoraAtendimento;

@@ -1,6 +1,7 @@
 package com.mperozo.consultorio.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -85,6 +86,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		return usuario.get();
+	}
+
+	@Override
+	public List<Usuario> buscarUsuariosPorTipo(TipoUsuarioEnum tipo) {
+		
+		List<Usuario> usuarios = usuarioRepository.findByTipo(tipo);
+		
+		return usuarios;
 	}
 
 }

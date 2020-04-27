@@ -1,6 +1,7 @@
 package com.mperozo.consultorio.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,11 @@ public class PacienteServiceImpl implements PacienteService {
 		paciente.setProntuario(prontuario);
 		
 		return pacienteRepository.save(paciente);
+	}
+
+	@Override
+	public List<Paciente> buscarTodosPacientes() {
+
+		return pacienteRepository.findAll();
 	}
 }
