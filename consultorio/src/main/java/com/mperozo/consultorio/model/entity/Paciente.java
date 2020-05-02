@@ -44,10 +44,6 @@ public class Paciente {
 	@JoinColumn(name = "ID_PRONTUARIO")
 	private Prontuario prontuario;
 	
-	@OneToMany
-	@JoinColumn(name = "ID_PLANO_SAUDE")
-	private List<PlanoSaude> planoSaude;
-	
 	@Column(name = "DATA_HORA_INCLUSAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	@NotNull(message = "Data de inclusão é obrigatória.")

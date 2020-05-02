@@ -1,6 +1,7 @@
 package com.mperozo.consultorio.api.controller;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mperozo.consultorio.api.assembler.AtendimentoDTOAssembler;
 import com.mperozo.consultorio.api.dto.AtendimentoDTO;
 import com.mperozo.consultorio.api.dto.AtualizaStatusAtendimentoDTO;
+import com.mperozo.consultorio.api.dto.StatusAtendimentoDTO;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
@@ -77,7 +79,6 @@ public class AtendimentoController {
 	public ResponseEntity buscar( 
 			@RequestParam(value = "idMedico", required = false) Long idMedico,
 			@RequestParam(value = "idPaciente", required = false) Long idPaciente,
-			@RequestParam(value = "idUsuarioAgendador", required = false) Long idUsuarioAgendador,
 			@RequestParam(value = "dataHoraAtendimento", required = false) LocalDateTime dataHoraAtendimento,
 			@RequestParam(value = "statusAtendimento", required = false) StatusAtendimentoEnum statusAtendimento
 			) {
@@ -85,7 +86,6 @@ public class AtendimentoController {
 		AtendimentoDTO atendimentoDTOFilter = AtendimentoDTO.builder()
 				.idMedico(idMedico)
 				.idPaciente(idPaciente)
-				.idUsuarioAgendador(idUsuarioAgendador)
 				.dataHoraAtendimento(dataHoraAtendimento)
 				.statusAtendimento(statusAtendimento).build();
 		
@@ -93,7 +93,22 @@ public class AtendimentoController {
 		
 		List<Atendimento> atendimentos = atendimentoService.buscar(atendimentoFiltro);
 		
-		return ResponseEntity.ok(atendimentos);
+		List<AtendimentoDTO> atendimentosDTOList = atendimentoDTOAssembler.toDTOList(atendimentos);
+		
+		return ResponseEntity.ok(atendimentosDTOList);
+	}
+	
+	@GetMapping("/listar-status-disponiveis")
+	public ResponseEntity listarStatusDisponiveis() {
+		
+		List<StatusAtendimentoDTO> statusAtendimentoDTOList = new LinkedList<StatusAtendimentoDTO>();
+		statusAtendimentoDTOList.add(new StatusAtendimentoDTO("...", ""));
+		
+		for (StatusAtendimentoEnum status : StatusAtendimentoEnum.values()) {
+			statusAtendimentoDTOList.add(new StatusAtendimentoDTO(status.getLabel(), status.getValue()));
+		}
+		
+		return ResponseEntity.ok(statusAtendimentoDTOList);
 	}
 	
 	@PutMapping("{id}/atualizar-status")
@@ -105,7 +120,6 @@ public class AtendimentoController {
 		} catch(Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage()); 
 		}
-		
 	}
 	
 }

@@ -37,14 +37,6 @@ public class Prontuario {
 	@Column(name = "NUMERO_PRONTUARIO")
 	private Integer numeroProntuario;
 	
-	@OneToMany
-	@JoinColumn(name = "ID_REGISTRO_PRONTUARIO")
-	private List<RegistroProntuario> registrosProntuario;
-	
-	@OneToMany
-	@JoinColumn(name = "ID_EXAME")
-	private List<Exame> exames;
-	
 	@Column(name = "DATA_HORA_INCLUSAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
 	@NotNull(message = "Data de inclusão é obrigatória.")
