@@ -1,5 +1,6 @@
 package com.mperozo.consultorio.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.mperozo.consultorio.api.dto.UsuarioDTO;
@@ -31,7 +32,7 @@ public class TestUtils {
 				.paciente(paciente)
 				.usuarioAgendador(secretaria)
 				.dataHoraInclusao(LocalDateTime.now())
-				.dataHoraAtendimento(LocalDateTime.now())
+				.dataAtendimento(LocalDate.now())
 				.status(StatusAtendimentoEnum.AGENDADO)
 				.build();
 	}

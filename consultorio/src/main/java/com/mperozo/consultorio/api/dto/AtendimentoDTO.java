@@ -1,6 +1,6 @@
 package com.mperozo.consultorio.api.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Convert;
 
@@ -27,8 +27,8 @@ public class AtendimentoDTO {
 	private String nomeMedico;
 	private String nomePaciente;
 	
-	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
-	private LocalDateTime dataHoraAtendimento;
+	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+	private LocalDate dataAtendimento;
 	
 	private StatusAtendimentoEnum statusAtendimento;
 }

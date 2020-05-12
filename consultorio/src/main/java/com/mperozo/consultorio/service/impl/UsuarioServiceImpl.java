@@ -96,4 +96,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarios;
 	}
 
+	public Usuario obterUsuarioAutenticado() {
+
+		//TODO obter o usuario autenticado
+		return usuarioRepository.findById(1L).get();
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.mperozo.consultorio.model.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -59,10 +60,10 @@ public class Atendimento {
 	@NotNull(message = "Status do atendimento é obrigatório.")
 	private StatusAtendimentoEnum status;
 
-	@Column(name = "DATA_HORA_ATENDIMENTO")
-	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	@Column(name = "DATA_ATENDIMENTO")
+	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
 	@NotNull(message = "A data do atendimento é obrigatória.")
-	private LocalDateTime dataHoraAtendimento;
+	private LocalDate dataAtendimento;
 	
 	@Column(name = "DATA_HORA_INCLUSAO")
 	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)

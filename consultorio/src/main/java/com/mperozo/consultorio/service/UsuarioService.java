@@ -21,4 +21,6 @@ public interface UsuarioService {
 	void verificarSeEmailJaEstaCadastrado(String email);
 
 	List<Usuario> buscarUsuariosPorTipo(TipoUsuarioEnum tipoUsuario);
+	
+	Usuario obterUsuarioAutenticado();
 }

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mperozo.consultorio.api.dto.AtendimentoDTO;
-import com.mperozo.consultorio.api.dto.UsuarioDTO;
 import com.mperozo.consultorio.model.entity.Atendimento;
-import com.mperozo.consultorio.model.entity.Usuario;
 import com.mperozo.consultorio.service.PacienteService;
 import com.mperozo.consultorio.service.UsuarioService;
 
@@ -26,7 +24,7 @@ public class AtendimentoDTOAssembler {
 		
 		return Atendimento.builder()
 				.id(dto.getId())
-				.dataHoraAtendimento(dto.getDataHoraAtendimento())
+				.dataAtendimento(dto.getDataAtendimento())
 				.paciente(dto.getIdPaciente() != null ? pacienteService.buscarPorId(dto.getIdPaciente()) : null)
 				.medico(dto.getIdMedico() != null ? usuarioService.buscarPorId(dto.getIdMedico()) : null)
 				.usuarioAgendador(dto.getIdUsuarioAgendador() != null ? usuarioService.buscarPorId(dto.getIdUsuarioAgendador()) : null)

@@ -1,9 +1,9 @@
 package com.mperozo.consultorio.model.repository;
 
-import java.time.LocalDateTime;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

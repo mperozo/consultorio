@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.mperozo.consultorio.exception.AuthenticationException;
 import com.mperozo.consultorio.exception.BusinessException;
 import com.mperozo.consultorio.model.entity.Usuario;
+import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 import com.mperozo.consultorio.model.repository.UsuarioRepository;
 import com.mperozo.consultorio.utils.TestUtils;
 
@@ -94,7 +95,7 @@ public class UsuarioServiceUnitTest {
 	@Test
 	public void deveIncluirUsuarioComSucesso() {
 		
-		Usuario usuario = criarUsuario("Marcos", TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE);
+		Usuario usuario = TestUtils.criarUsuario(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE, TipoUsuarioEnum.MEDICO);
 		lenient().doNothing().when(usuarioService).verificarSeEmailJaEstaCadastrado(TestUtils.EMAIL_PARA_TESTE);
 		lenient().when(usuarioRepositoryMock.save(usuario)).thenReturn(usuario);
 		

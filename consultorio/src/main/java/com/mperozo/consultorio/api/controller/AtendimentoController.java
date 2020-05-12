@@ -1,6 +1,6 @@
 package com.mperozo.consultorio.api.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,14 +79,14 @@ public class AtendimentoController {
 	public ResponseEntity buscar( 
 			@RequestParam(value = "idMedico", required = false) Long idMedico,
 			@RequestParam(value = "idPaciente", required = false) Long idPaciente,
-			@RequestParam(value = "dataHoraAtendimento", required = false) LocalDateTime dataHoraAtendimento,
+			@RequestParam(value = "dataAtendimento", required = false) LocalDate dataAtendimento,
 			@RequestParam(value = "statusAtendimento", required = false) StatusAtendimentoEnum statusAtendimento
 			) {
 		
 		AtendimentoDTO atendimentoDTOFilter = AtendimentoDTO.builder()
 				.idMedico(idMedico)
 				.idPaciente(idPaciente)
-				.dataHoraAtendimento(dataHoraAtendimento)
+				.dataAtendimento(dataAtendimento)
 				.statusAtendimento(statusAtendimento).build();
 		
 		Atendimento atendimentoFiltro = atendimentoDTOAssembler.toEntity(atendimentoDTOFilter);
@@ -98,7 +98,7 @@ public class AtendimentoController {
 		return ResponseEntity.ok(atendimentosDTOList);
 	}
 	
-	@GetMapping("/listar-status-disponiveis")
+	@GetMapping("/status-disponiveis")
 	public ResponseEntity listarStatusDisponiveis() {
 		
 		List<StatusAtendimentoDTO> statusAtendimentoDTOList = new LinkedList<StatusAtendimentoDTO>();

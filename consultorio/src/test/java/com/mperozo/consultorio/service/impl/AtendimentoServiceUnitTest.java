@@ -30,6 +30,7 @@ import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 import com.mperozo.consultorio.model.enums.TipoUsuarioEnum;
 import com.mperozo.consultorio.model.repository.AtendimentoRepository;
 import com.mperozo.consultorio.model.repository.PacienteRepository;
+import com.mperozo.consultorio.service.UsuarioService;
 import com.mperozo.consultorio.utils.TestUtils;
 
 @ExtendWith(SpringExtension.class)
@@ -42,6 +43,9 @@ public class AtendimentoServiceUnitTest {
 	@MockBean
 	private PacienteRepository PacienteRepositoryMock;
 	
+	@MockBean
+	private UsuarioService usuarioServiceMock;
+	
 	@SpyBean
 	private AtendimentoServiceImpl atendimentoService;
 
@@ -52,6 +56,7 @@ public class AtendimentoServiceUnitTest {
 		Atendimento expected = TestUtils.criarAtendimento();
 		
 		doReturn(atendimentoASalvar).when(atendimentoRepositoryMock).save(atendimentoASalvar);
+		doReturn(TestUtils.criarUsuario("aa@a.com", "Simples1", TipoUsuarioEnum.MEDICO)).when(usuarioServiceMock).obterUsuarioAutenticado();
 		
 		Atendimento result = atendimentoService.salvarAtendimento(atendimentoASalvar);
 		
@@ -84,6 +89,7 @@ public class AtendimentoServiceUnitTest {
 
 		doReturn(Optional.of(atendimentoAntigo)).when(atendimentoRepositoryMock).findById(atendimentoAntigo.getId());
 		doReturn(atendimentoAtualizado).when(atendimentoRepositoryMock).saveAndFlush(Mockito.any(Atendimento.class));
+		doReturn(TestUtils.criarUsuario("aa@a.com", "Simples1", TipoUsuarioEnum.MEDICO)).when(usuarioServiceMock).obterUsuarioAutenticado();
 		
 		atendimentoService.salvarAtendimento(atendimentoAntigo);
 		Atendimento result = atendimentoService.atualizarAtendimento(atendimentoAtualizado);
@@ -155,7 +161,7 @@ public class AtendimentoServiceUnitTest {
 	}
 	
 	@Test
-	public void deveAtualizarStatusDeUmLancamento() {
+	public void deveAtualizarStatusDeUmAtendimento() {
 		
 		Atendimento atendimentoAntigo = TestUtils.criarAtendimento();
 		doReturn(Optional.of(atendimentoAntigo)).when(atendimentoRepositoryMock).findById(atendimentoAntigo.getId());

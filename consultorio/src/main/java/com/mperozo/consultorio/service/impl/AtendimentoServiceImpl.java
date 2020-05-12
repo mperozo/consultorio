@@ -1,10 +1,12 @@
 package com.mperozo.consultorio.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -16,11 +18,15 @@ import com.mperozo.consultorio.model.entity.Atendimento;
 import com.mperozo.consultorio.model.enums.StatusAtendimentoEnum;
 import com.mperozo.consultorio.model.repository.AtendimentoRepository;
 import com.mperozo.consultorio.service.AtendimentoService;
+import com.mperozo.consultorio.service.UsuarioService;
 
 @Service
 public class AtendimentoServiceImpl implements AtendimentoService {
 
 	private AtendimentoRepository atendimentoRepository;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	public AtendimentoServiceImpl(AtendimentoRepository atendimentoRepository) {
 		this.atendimentoRepository = atendimentoRepository;
@@ -30,11 +36,13 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 	@Transactional
 	public Atendimento salvarAtendimento(Atendimento atendimento) {
 
-		validarAtendimento(atendimento);
+		atendimento.setUsuarioAgendador(usuarioService.obterUsuarioAutenticado());
 		atendimento.setStatus(StatusAtendimentoEnum.AGENDADO);
 		atendimento.setDataHoraInclusao(LocalDateTime.now());
-		//TODO obter o usuário autenticado
-		//atendimento.setUsuarioAgendador(usuarioAgendador);
+		validarAtendimento(atendimento);
+
+		atendimento.setDataAtendimento(LocalDate.now());
+
 		return atendimentoRepository.save(atendimento);
 	}
 
@@ -71,7 +79,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 
 		validarAlteracaoDeAtendimento(atendimentoNovo, atendimentoAntigo);
 		
-		atendimentoAntigo.setDataHoraAtendimento(atendimentoNovo.getDataHoraAtendimento());
+		atendimentoAntigo.setDataAtendimento(atendimentoNovo.getDataAtendimento());
 		atendimentoAntigo.setMedico(atendimentoNovo.getMedico());
 		atendimentoAntigo.setPaciente(atendimentoNovo.getPaciente());
 		atendimentoAntigo.setUsuarioAgendador(atendimentoNovo.getUsuarioAgendador());
