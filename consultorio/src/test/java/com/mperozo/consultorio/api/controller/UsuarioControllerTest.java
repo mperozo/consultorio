@@ -1,3 +1,5 @@
+/*
+
 package com.mperozo.consultorio.api.controller;
 
 import org.junit.jupiter.api.Test;
@@ -114,6 +116,8 @@ public class UsuarioControllerTest {
 	
 	/* Métodos Auxiliares */
 
+/*
+
 	private UsuarioDTO criarUsuarioDTO() {
 		return TestUtils.criarUsuarioDTO(TestUtils.EMAIL_PARA_TESTE, TestUtils.SENHA_PARA_TESTE, TestUtils.TIPO_MEDICO);
 	}
@@ -131,3 +135,5 @@ public class UsuarioControllerTest {
 		return request;
 	}
 }
+
+*/

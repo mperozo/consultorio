@@ -54,7 +54,6 @@ public class AtendimentoController {
 
 	@PutMapping("{id}")
 	public ResponseEntity atualizarAtendimento( @PathVariable("id") Long id, @RequestBody AtendimentoDTO atendimentoDTO ) {
-		
 		try {
 			Atendimento atendimentoComNovosDados = atendimentoDTOAssembler.toEntity(atendimentoDTO);
 			Atendimento atendimentoAutalizado = atendimentoService.atualizarAtendimento(atendimentoComNovosDados);
@@ -96,6 +95,13 @@ public class AtendimentoController {
 		List<AtendimentoDTO> atendimentosDTOList = atendimentoDTOAssembler.toDTOList(atendimentos);
 		
 		return ResponseEntity.ok(atendimentosDTOList);
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity buscar(@PathVariable("id") Long id) {
+		return atendimentoService.buscarPorId(id)
+				.map( atendimento -> new ResponseEntity( atendimentoDTOAssembler.toDTO(atendimento) , HttpStatus.OK) )
+				.orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND) );
 	}
 	
 	@GetMapping("/status-disponiveis")

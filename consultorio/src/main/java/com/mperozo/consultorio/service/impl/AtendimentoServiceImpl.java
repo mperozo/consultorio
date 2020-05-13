@@ -79,10 +79,10 @@ public class AtendimentoServiceImpl implements AtendimentoService {
 
 		validarAlteracaoDeAtendimento(atendimentoNovo, atendimentoAntigo);
 		
-		atendimentoAntigo.setDataAtendimento(atendimentoNovo.getDataAtendimento());
+		//atendimentoAntigo.setDataAtendimento(atendimentoNovo.getDataAtendimento());
+		//atendimentoAntigo.setUsuarioAgendador(atendimentoNovo.getUsuarioAgendador());
 		atendimentoAntigo.setMedico(atendimentoNovo.getMedico());
 		atendimentoAntigo.setPaciente(atendimentoNovo.getPaciente());
-		atendimentoAntigo.setUsuarioAgendador(atendimentoNovo.getUsuarioAgendador());
 		atendimentoAntigo.setDataHoraAlteracao(LocalDateTime.now());
 		
 		return atendimentoAntigo;

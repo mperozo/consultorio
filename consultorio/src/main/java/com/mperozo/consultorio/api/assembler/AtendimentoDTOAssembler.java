@@ -36,8 +36,10 @@ public class AtendimentoDTOAssembler {
 		
 		return AtendimentoDTO.builder()
 				.id(entity.getId())
-				.nomePaciente(entity.getPaciente().getNome())
-				.nomeMedico(entity.getMedico().getNome())
+				.idPaciente(entity.getPaciente() != null ? entity.getPaciente().getId() : null)
+				.nomePaciente(entity.getPaciente() != null ? entity.getPaciente().getNome() : null)
+				.idMedico(entity.getMedico() != null ? entity.getMedico().getId() : null)
+				.nomeMedico(entity.getMedico() != null ? entity.getMedico().getNome() : null)
 				.statusAtendimento(entity.getStatus()).build();
 	}
 
