@@ -21,4 +21,6 @@ public interface AtendimentoService {
 	Optional<Atendimento> buscarPorId(Long id);
 
 	void excluir(Long id);
+	
+	
 }
