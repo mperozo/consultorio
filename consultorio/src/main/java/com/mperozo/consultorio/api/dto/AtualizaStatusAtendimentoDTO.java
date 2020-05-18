@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AtualizaStatusAtendimentoDTO {
 
-	private StatusAtendimentoEnum statusAtendimento;
+	private StatusAtendimentoEnum status;
 }

@@ -119,9 +119,8 @@ public class AtendimentoController {
 	
 	@PutMapping("{id}/atualizar-status")
 	public ResponseEntity atualizarStatusAtendimento(@PathVariable("id") Long id, @RequestBody AtualizaStatusAtendimentoDTO dto) {
-		
 		try {
-			Atendimento atendimentoAtualizado = atendimentoService.atualizarStatusAtendimento(id, dto.getStatusAtendimento());
+			Atendimento atendimentoAtualizado = atendimentoService.atualizarStatusAtendimento(id, dto.getStatus());
 			return ResponseEntity.ok(atendimentoAtualizado);
 		} catch(Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage()); 

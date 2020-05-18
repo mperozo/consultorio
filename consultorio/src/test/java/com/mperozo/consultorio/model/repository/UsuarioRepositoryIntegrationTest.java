@@ -1,4 +1,3 @@
-/*
 
 package com.mperozo.consultorio.model.repository;
 
@@ -82,4 +81,3 @@ public class UsuarioRepositoryIntegrationTest {
 	
 }
 
-*/

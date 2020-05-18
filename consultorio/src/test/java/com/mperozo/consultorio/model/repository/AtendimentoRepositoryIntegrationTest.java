@@ -1,5 +1,3 @@
-/*
-
 package com.mperozo.consultorio.model.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -81,10 +79,7 @@ public class AtendimentoRepositoryIntegrationTest {
 		assertThat(atendimentoBuscado.get()).isEqualToComparingFieldByField(atendimento);
 	}
 
-	
-	
 	/* Métodos auxiliares */ 
-/*
 	
 	private Atendimento criarEPersistirUmAtendimento() {
 		Atendimento atendimento = TestUtils.criarAtendimento();
@@ -94,4 +89,3 @@ public class AtendimentoRepositoryIntegrationTest {
 	
 
 }
-*/
